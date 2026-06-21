@@ -1,5 +1,15 @@
 ## Info
-This script migrates and updates Google Drive document and folder sharing for users in a Google Workspace domain, according to a mapping of old to new user emails. It processes all users, retrieves their owned files and folders, updates sharing permissions based on the mapping, and logs/report results. It also writes summary stats to a PostgreSQL database.
+Re-share Google Drive content from old to new user emails during a Google Workspace
+domain migration, driven by a mapping of `old -> new` addresses. Two entrypoints:
+
+- **`document_manager.py`** — users' **personal Drive**: for every user it walks their
+  owned files/folders and re-applies sharing per the mapping. Writes summary stats to
+  PostgreSQL.
+- **`shared_drives_manager.py`** — **Shared Drives**: walks every (non-sensitive)
+  shared drive and re-applies folder/file sharing per the mapping (also handles
+  domain-wide shares).
+
+Both share the same `config.py` and `mapping.json`.
 
 ## How to use
 1. Put your Service Account (SA) JSON key at `app/sa/service_account.json`
@@ -15,9 +25,10 @@ This script migrates and updates Google Drive document and folder sharing for us
    ```
    pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib psycopg2-binary
    ```
-3. Run the script:
+3. Run a script:
    ```
-   python app/document_manager.py
+   python app/document_manager.py        # personal Drive
+   python app/shared_drives_manager.py   # Shared Drives
    ```
 
 ### Using Docker Compose (Recommended)
@@ -33,7 +44,11 @@ This script migrates and updates Google Drive document and folder sharing for us
    ```
 
 ## What each file does
-- **document_manager.py**: Main entrypoint. Manages document permissions, processes user documents and folders, and updates sharing based on a mapping.
+- **document_manager.py**: personal-Drive entrypoint. Processes each user's owned
+  documents and folders and updates sharing based on the mapping.
+- **shared_drives_manager.py**: Shared-Drives entrypoint. Walks shared drives and
+  updates folder/file sharing based on the mapping; skips drives listed in
+  `config.sensitive_drives`.
 
 ### Important to know
 Here are the Domain Wide Delegation scopes you must have configured for your Service Account client id in G-Suite:

@@ -22,6 +22,23 @@ c_level_emails = [
     "exec2@seconddomain.com",
 ]
 
+
+# --- Shared Drives reshare settings (used by shared_drives_manager.py) ---
+
+# How deep to recurse into folder trees inside a shared drive.
+MAX_FOLDER_LEVEL = 2
+
+# If set to a folder id, only that folder (and its subtree) is processed.
+specific_folder_id = None
+
+# Drives to skip entirely (by id and/or name) — fill with your own.
+sensitive_drives = [
+    {
+        "id": "YOUR_DRIVE_ID_TO_SKIP",
+        "name": "Example Drive To Skip"
+    },
+]
+
 def get_admin_creds(sa_path, admin_email):
     credentials = service_account.Credentials.from_service_account_file(
         sa_path,
