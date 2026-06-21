@@ -1,0 +1,19 @@
+.venv/
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Secrets — never commit
+sa/*
+!sa/.gitkeep
+app/sa/*
+!app/sa/.gitkeep
+.env
+
+# Real data / runtime artifacts
+app/mapping.json
+pgdata/
+logs/
+*.code-workspace

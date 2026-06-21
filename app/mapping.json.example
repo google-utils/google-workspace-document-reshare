@@ -1,0 +1,12 @@
+[
+  {
+    "old": "user1@yourdomain.com",
+    "temporary": "user1@seconddomain.com",
+    "new": "user1@seconddomain.com"
+  },
+  {
+    "old": "user2@yourdomain.com",
+    "temporary": "user2@seconddomain.com",
+    "new": "user2@seconddomain.com"
+  }
+]
